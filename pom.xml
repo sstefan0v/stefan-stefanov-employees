@@ -27,7 +27,9 @@
 		<url/>
 	</scm>
 	<properties>
+		<apache.commons-csv.version>1.10.0</apache.commons-csv.version>
 		<java.version>23</java.version>
+		<projectlombok.version>1.18.34</projectlombok.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -38,6 +40,19 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-csv</artifactId>
+			<version>${apache.commons-csv.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>${projectlombok.version}</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
