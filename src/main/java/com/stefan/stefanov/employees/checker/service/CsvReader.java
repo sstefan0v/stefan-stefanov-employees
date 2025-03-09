@@ -18,24 +18,35 @@ import java.util.*;
 @Slf4j
 public class CsvReader implements CsvRowsProvider<InputStream> {
 
+    private static final String EMP_ID_HEADER = "EmpID";
+    private static final String PROJ_ID_HEADER = "ProjectID";
+    private static final String DATE_FROM_HEADER = "DateFrom";
+    private static final String DATE_TO_HEADER = "DateTo";
+
     private final DateParser dateParser;
 
     public List<CsvRow> parseCsvFile(InputStream inputStream) {
-        List<CsvRow> rows = new ArrayList<>();
+        final List<CsvRow> rows = new ArrayList<>();
+
+        CSVFormat csvFormat = CSVFormat.DEFAULT.builder()
+                .setHeader(EMP_ID_HEADER, PROJ_ID_HEADER, DATE_FROM_HEADER, DATE_TO_HEADER)
+                .setSkipHeaderRecord(true)
+                .build();
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
-             CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.withFirstRecordAsHeader())) {
+             CSVParser csvParser = new CSVParser(reader, csvFormat)) {
 
             for (CSVRecord record : csvParser) {
+                log.info("CSV record: {}", record);
 
                 Map<String, String> recordMap = record.toMap();
-                LocalDate dateTo = dateParser.getDate(recordMap.get("DateTo"));
+                LocalDate dateTo = dateParser.getDate(recordMap.get(DATE_TO_HEADER));
                 dateTo = dateTo == null ? LocalDate.now() : dateTo;
 
                 CsvRow csvRow = CsvRow.getBuilder()
-                        .empId(recordMap.get("EmpID"))
-                        .projectId(recordMap.get("ProjectID"))
-                        .dateFrom(dateParser.getDate(recordMap.get("DateFrom")))
+                        .empId(recordMap.get(EMP_ID_HEADER))
+                        .projectId(recordMap.get(PROJ_ID_HEADER))
+                        .dateFrom(dateParser.getDate(recordMap.get(DATE_FROM_HEADER)))
                         .dateTo(dateTo)
                         .build();
                 rows.add(csvRow);
@@ -50,6 +61,6 @@ public class CsvReader implements CsvRowsProvider<InputStream> {
 
     @Override
     public List<CsvRow> getRecords(InputStream inputStream) {
-         return parseCsvFile(inputStream);
+        return parseCsvFile(inputStream);
     }
 }
