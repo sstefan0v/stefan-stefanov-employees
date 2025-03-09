@@ -1,10 +1,7 @@
 package com.stefan.stefanov.employees.checker.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-
 import java.time.LocalDate;
-
 
 @Data
 public class CsvRow {
@@ -55,5 +52,4 @@ public class CsvRow {
     public static Builder getBuilder() {
         return new Builder();
     }
-
 }
