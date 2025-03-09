@@ -18,3 +18,12 @@ EmpID, ProjectID, DateFrom, DateTo
 218, 10, 2012-05-16, NULL
 143, 10, 2009-01-01, 2011-04-27 
 ```
+
+It is important to note that the present solution has some specifics, due to deadline limitations:
+- There is nested static html pages, which normally are served via another server. For the sake of the demo, 
+I imported them in the resources' folder.
+- Also, it is limited by the size of CSV files. If 
+larger size of data is required, the in-memory calculations can be replaced by introduction of a relational DB. The DB 
+will persist all CSV records and will help the retrieval of the required data by utilizing its select statement 
+capabilities.
+- Test coverage is not full.
