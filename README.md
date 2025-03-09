@@ -13,7 +13,6 @@ https://github.com/sstefan0v/stefan-stefanov-employees-ui
 
 The backend works with standard CSV files, which contain the following structure:
 ```
-Sample data:
 EmpID, ProjectID, DateFrom, DateTo
 143, 12, 2013-11-01, 2014-01-05
 218, 10, 2012-05-16, NULL
