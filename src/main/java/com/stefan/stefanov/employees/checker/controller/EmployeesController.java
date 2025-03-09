@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class FilesController {
+public class EmployeesController {
 
     private final EmployeeStatisticsService employeeStatisticsService;
     private final ObjectMapper objectMapper;

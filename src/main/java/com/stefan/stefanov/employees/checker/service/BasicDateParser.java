@@ -1,19 +1,18 @@
 package com.stefan.stefanov.employees.checker.service;
 
+import com.stefan.stefanov.employees.checker.exception.DateParseException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.List;
 
 @Service
 @Slf4j
 public class BasicDateParser implements DateParser {
-
     private final List<String> patterns = List.of(
-            "MMMM d, yyyy",
             "yyyy-MM-dd",
             "dd/MM/yyyy",
             "MM-dd-yyyy",
@@ -30,11 +29,11 @@ public class BasicDateParser implements DateParser {
             try {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
                 return LocalDate.parse(dateStr.trim(), formatter);
-            } catch (DateTimeParseException exc) {
+            } catch (DateTimeException exc) {
                 log.debug("Invalid date format: {}, {}", dateStr, exc.toString());
             }
         }
-        throw new IllegalArgumentException("Invalid date format: " + dateStr);
+        throw new DateParseException("String cannot be parsed to date! Invalid date format: " + dateStr);
     }
 
     @Override
