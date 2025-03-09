@@ -8,6 +8,7 @@ import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 @Slf4j
@@ -18,7 +19,8 @@ public class BasicDateParser implements DateParser {
             "MM-dd-yyyy",
             "dd-MMM-yyyy",
             "dd-MM-yyyy",
-            "dd.MM.yyyy"
+            "dd.MM.yyyy",
+            "dd.MM.yy"
     );
 
     private LocalDate parseDate(String dateStr, List<String> patterns) {
@@ -27,7 +29,7 @@ public class BasicDateParser implements DateParser {
         }
         for (String pattern : patterns) {
             try {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern, Locale.ENGLISH);
                 return LocalDate.parse(dateStr.trim(), formatter);
             } catch (DateTimeException exc) {
                 log.debug("Invalid date format: {}, {}", dateStr, exc.toString());
